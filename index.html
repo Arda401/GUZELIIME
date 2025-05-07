@@ -15,7 +15,7 @@
     }
 
     .container {
-      margin-top: 120px; /* Burada margin-top değerini 150px'ten 120px'e düşürdük */
+      margin-top: 120px;
       padding: 20px;
     }
 
@@ -126,10 +126,19 @@
       color: #ff69b4;
       font-weight: bold;
       transition: color 0.3s;
+      background-color: #ff1493;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      text-align: center;
+      display: inline-block;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s, transform 0.3s;
     }
 
     #hiddenLink a:hover {
-      color: #ff1493;
+      background-color: #ff69b4;
+      transform: scale(1.1);
     }
 
     #birthdayText {
@@ -141,7 +150,6 @@
       text-shadow: 2px 2px 6px white;
     }
 
-    /* Süpriz butonunu alt kısma sabitle */
     #surpriseImageButton {
       position: fixed;
       bottom: 20px;
@@ -154,7 +162,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 1.1rem;
-      display: none; /* Başlangıçta görünmez */
+      display: none;
     }
 
     #surpriseImageButton:hover {
@@ -169,22 +177,30 @@
       border: 5px solid #ff1493;
     }
 
-    /* Tıkla butonunun stilini belirgin hale getirme */
-    #hiddenLink a {
-      background-color: #ff1493;
-      color: white;
-      padding: 15px 25px;
-      border-radius: 8px;
-      font-size: 1.5rem;
-      text-align: center;
-      display: inline-block;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s, transform 0.3s;
+    /* Yeni fotoğraf kutuları */
+    #photoContainers {
+      position: fixed;
+      top: 20%;
+      width: 100%;
+      display: none;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 10;
     }
 
-    #hiddenLink a:hover {
-      background-color: #ff69b4;
-      transform: scale(1.1);
+    .photo-box {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .photo-box img.photo {
+      width: 280px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 3px solid #ff69b4;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -213,16 +229,24 @@
   </div>
 
   <div id="birthdayText">İYİKİ DOĞDUN 🎉🥳</div>
-
   <div id="hiddenLink">
     <a href="https://www.nefisyemektarifleri.com/video/en-kolay-icli-kofte-tarifi-videolu/" target="_blank">Tıkla</a>
   </div>
 
-  <!-- Yeni Süpriz Butonu -->
   <button id="surpriseImageButton" onclick="showSurpriseImage()">Süpriz 🎁</button>
-
-  <!-- Fotoğrafın başlangıçta görünmemesi için display:none kullanıyoruz -->
   <img id="secondImage" src="https://icdn.ensonhaber.com/crop/1200x0/resimler/diger/kok/2023/06/07/recep-ivedikin-kufurbaz-ninesi-hakkinda-soke-eden-detay-kimse-tahmi_0947c398.jpg" alt="Recep İvedik'in Ninesi">
+
+  <!-- Yeni fotoğraf kutuları -->
+  <div id="photoContainers">
+    <div class="photo-box left">
+      <img src="https://raw.githubusercontent.com/Arda401/GUZELIIME/main/I3.jpg" alt="Sol Fotoğraf 1" class="photo" id="leftPhoto1" />
+      <img src="https://raw.githubusercontent.com/Arda401/GUZELIIME/main/I2.png" alt="Sol Fotoğraf 2" class="photo" id="leftPhoto2" />
+    </div>
+    <div class="photo-box right">
+      <img src="https://raw.githubusercontent.com/Arda401/GUZELIIME/main/mıstık.jpg" alt="Sağ Fotoğraf 1" class="photo" id="rightPhoto1" />
+      <img src="https://raw.githubusercontent.com/Arda401/GUZELIIME/main/nigga.png" alt="Sağ Fotoğraf 2" class="photo" id="rightPhoto2" />
+    </div>
+  </div>
 
   <script>
     const emojis = ["❤️", "🌹", "💐", "💕", "💖", "🌸"];
@@ -245,6 +269,10 @@
     function startSurprise() {
       document.getElementById("message").style.display = "block";
       document.getElementById("bg-music").play();
+
+      // Fotoğraf kutularını göster
+      document.getElementById("photoContainers").style.display = "flex";
+
       if (rainInterval) return;
       rainInterval = setInterval(() => {
         for (let i = 0; i < 5; i++) createEmoji();
@@ -281,7 +309,7 @@
         document.getElementById("closeButton").style.display = "inline-block";
         document.getElementById("passwordBox").style.display = "none";
         document.getElementById("message").style.display = "none";
-        document.getElementById("surpriseImageButton").style.display = "inline-block"; // Süpriz butonunu görünür yap
+        document.getElementById("surpriseImageButton").style.display = "inline-block";
       } else {
         alert("Yanlış şifre!");
       }
